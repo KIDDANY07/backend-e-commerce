@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tienda en Línea</title>
+  <div id="products"></div>
+</head>
+
+<body>
+
+  <h1>Bienvenido a la tienda en Línea</h1> 
+  <div id="products"></div>
+
+  <script>
+    fetch('/api/products')
+      .then(response => response.json())
+      .then(data => {
+        const productsDiv = documen.getElementById('products');
+        data.forEach(product =>{
+          const productDiv =document.createElement('div');
+          productDiv.innerHTML = `
+            <h2>${product.name}</h2>
+            <p>${product.description}</p>
+            <p>Precio: $${product.price}</p>
+          `;
+          productsDiv.appendChild(productDiv);
+        });
+      });
+
+  </script>
+
+</body>
+</html>
+Run HTML
