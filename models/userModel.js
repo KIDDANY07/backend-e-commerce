@@ -2,6 +2,7 @@ const db = require('../config/db');
 const bcrypt = require('bcrypt');
 //Object model user -> consultas para los usuarios
 class User {
+  //Crear usuario
   static async create({ name, email, password, role, image, address }) {
     if (!name || !email || !password) throw new Error('Todos los campos son obligatorios');
 
@@ -12,12 +13,12 @@ class User {
     );
     return result.insertId;
   }
-
+  //Seleccionar por email
   static async findByEmail(email) {
     const [rows] = await db.query('SELECT * FROM users WHERE email = ?', [email]);
     return rows[0];
   }
-
+  //Seleccion por ID
   static async findById(id) {
     const [rows] = await db.query(
       'SELECT id, name, email, role, image, address FROM users WHERE id = ?',
@@ -25,14 +26,14 @@ class User {
     );
     return rows[0];
   }
-
+  //Actualizar usuario
   static async update(id, { name, email, image, address }) {
     await db.query(
       'UPDATE users SET name = ?, email = ?, image = ?, address = ? WHERE id = ?',
       [name, email, image, address, id]
     );
   }
-
+  //Actualizar contraseña
   static async updatePassword(id, newPassword) {
     const hashedPassword = await bcrypt.hash(newPassword, 10);
     await db.query('UPDATE users SET password = ? WHERE id = ?', [hashedPassword, id]);

@@ -13,12 +13,12 @@ class Product {
     const [rows] = await db.query(query, params);
     return rows;
   }
-
+  //Seleccionar todos los productos por el ID
   static async getById(id) {
     const [rows] = await db.query('SELECT * FROM products WHERE id = ?', [id]);
     return rows[0];
   }
-
+  //Crear productos
   static async create(product) {
     const { name, description, price, stock, image_url } = product;
     const [result] = await db.query(
@@ -27,7 +27,7 @@ class Product {
     );
     return result.insertId;
   }
-
+  //Actualizar productos
   static async update(id, product) {
     const { name, description, price, stock, image_url } = product;
     await db.query(
